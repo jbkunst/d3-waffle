@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+</head>
+<body>
+  <div id="container" width="100%" height="200px"></div>
+  <div id="container2" width="100%" height="200px"></div>
+  <div id="container3" width="100%" height="200px"></div>
+  <div id="container4" width="100%" height="200px"></div>
+  <div id="container5" width="100%" height="200px"></div>
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.3/d3-tip.min.js"></script>
+  <script type="text/javascript" src="d3-waffle.js"></script>
+  
+  <script type="text/javascript">
+
+  /* example 1 with simple data */
+  var data = [
+    { "name": "type 1", "value": 102},
+    { "name": "type 2", "value": 65},
+    { "name": "type 3", "value": 43},
+    { "name": "type 4", "value": 12}
+  ]
+
+  var chart = d3waffle();
+  
+  d3.select("#container")
+    .datum(data)
+    .call(chart);
+
+
+  /* example 2 */
+  /* same data 2 */
+  /* simplifying: less rows and changing the scale) */
+  var chart2 = d3waffle()
+                  .rows(6)
+                  .icon("&#9679;")
+                  .scale(0.5); // basically is Math.round(value/5);
+  d3.select("#container2")
+    .datum(data)
+    .call(chart2);
+
+
+  /* example 3 */
+  /* same data */
+  var chart3 = d3waffle()
+                .rows(6)
+                .scale(0.5); // basically is Math.round(value/5);
+  d3.select("#container3")
+    .datum(data)
+    .call(chart3);
+
+
+  /* example 4 */
+  /* a more complex one */
+  /* data from http://www.nytimes.com/2008/07/20/business/20debt.html?_r=0  */
+  var data = [
+    { "name": "Mortgage ($84,911)", "value": 84911},
+    { "name": "Auto and\ntuition loans ($14,414)", "value": 14414},
+    { "name": "Home equity loans ($10,062)", "value": 10062},
+    { "name": "Credit Cards ($8,565)", "value": 8565}
+  ]
+
+  /* to color elements we use the class name ( slugigy(name) ) */
+  var domain = data.map(function(d){ return slugify(d.name); })
+  var range = ["#c7d4b6", "#a3aabd", "#a0d0de", "#97b5cf"]
+  var palette = d3.scale.ordinal().domain(domain).range(range);
+
+  var chart4 = d3waffle()
+                  .rows(7)
+                  .scale(1/392)
+                  .colorscale(palette)
+                  .appearancetimes(function(){ return 100;})
+                  .height(150);
+
+  d3.select("#container4")
+    .datum(data)
+    .call(chart4);
+
+
+  </script>
+
+</body>
+</html>
