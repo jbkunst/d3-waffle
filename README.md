@@ -1,4 +1,4 @@
-# ♕ d3-Chessboard 
+# d3-waflle
 
 **d3-waffle**  is a waffle (viz) maker *a la* D3. 
 
@@ -95,6 +95,7 @@ This plugin needs only [d3js](http://d3js.org/)!
 3. http://d3js.org/
 4. [Day/Hour Heatmap by tjdecke](http://bl.ocks.org/tjdecke/5558084)
 5. https://github.com/hrbrmstr/waffle
+6. https://rud.is/b/2015/03/26/pre-cran-waffle-update-isotype-pictograms/ (yay I keep drying ;) )
 
 ## News
 - Version 0.1 released (2015-07-07). 
