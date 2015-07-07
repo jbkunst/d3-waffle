@@ -1,11 +1,12 @@
 function d3waffle() {
-  var margin = {top: 20, right: 20, bottom: 20, left: 20},
+  var margin = {top: 5, right: 5, bottom: 5, left: 5},
       icon = "&#9632;",
       scale = 1,
       rows = 10,
-      colorscale = d3.scale.category10(),
-      appearancetimes = function(d, i){ return 0; },
-      width = 1000,
+      adjust = 1,
+      colorscale = d3.scale.category20(),
+      appearancetimes = function(d, i){ return 400; },
+      width = 600,
       height = 200;
      
   function chart(selection) {
@@ -48,6 +49,21 @@ function d3waffle() {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+      var tooltip = d3.select("body").append("div")
+        .attr("class", "venntooltip")
+        .style("position", "absolute")
+        .style("text-align", "center")
+        .style("width", 60 + "px")
+        .style("height", 16 + "px")
+        .style("background", "#333")
+        .style("color","white")
+        .style("padding","2px")
+        .style("border","0px")
+        .style("border-radius","8px")
+        .style("opacity",0)
+        .style('font-size',  "15px")
+        .style('font-family', 'Arial');
+
       svg.style("cursor", "default");
 
       var nodes = svg.selectAll(".node")
@@ -57,52 +73,56 @@ function d3waffle() {
             .attr("transform", function(d) { return "translate(" + (d.col)*gridSize + "," + (rows - d.row)*gridSize  + ")"; });
 
       /* this is necesary, when the icons are small/thin activate mouseout */
-      /*
       nodes.append("rect")
             .style("fill", "white")
             .attr('class', function(d){ return d.class; })
-            .style("stroke", "white")
+            .style("stroke", "gray")
             .attr("width", gridSize)
             .attr("height", gridSize)
-            .on("mouseover", mouseover)
+/*            .on("mouseover", mouseover)
             .on("mouseout", mouseout)
-            .transition()
-            .duration(appearancetimes)
-            .style("opacity", 1)
-*/
+            .on("mousemove", mousemove)*/
+            .style("opacity", 0.0)
+
       nodes.append("text")
             .style("opacity", 0)
             .html(icon)
             .attr('class', function(d){ return d.class; })
-           /* .attr('font-family', 'FontAwesome')*/
+            .attr('font-family', 'FontAwesome')
             .attr("transform", function(d) { return "translate(" + gridSize/2 + "," + 5/6*gridSize  + ")"; })
             .style("text-anchor", "middle")
             .style('fill', function(d){ return colorscale(d.class); })
             .style("font-size", function(d) {
               val = 9;
-              val2 = 2.55;
+              val2 = 2.5;
               textsize = Math.min(val2 * gridSize, (val2 * gridSize - val) / this.getComputedTextLength() * val);
-              return textsize + "px";
+              return textsize * adjust + "px";
             })
             .on("mouseover", mouseover)
             .on("mouseout", mouseout)
+            .on("mousemove", mousemove)
             .transition()
             .duration(appearancetimes)
             .style("opacity", 1)
 
       function mouseover(d){
-        d3.select("#" + idcontainer)
-            .selectAll("rect, text")
-            .style("opacity", 0.2);
+        tooltip.transition().duration(400).style("opacity", .9);
+        el = data.filter(function(e){ return e.name == d.name})[0]
+        tooltip.text(el.value);
 
-        d3.select("#" + idcontainer).selectAll("." + d.class)
-            .style("opacity", 1);
+        d3.select("#" + idcontainer).selectAll("text").transition().duration(400).style("opacity", 0.2);
+        d3.select("#" + idcontainer).selectAll("text." + d.class).transition().duration(400).style("opacity", 1);
       }
 
       function mouseout(d){
-        d3.select("#" + idcontainer)
-            .selectAll("rect, text")
-            .style("opacity", 1);
+        tooltip.transition().duration(400).style("opacity", 0);
+        d3.select("#" + idcontainer).selectAll("text").transition().duration(400).style("opacity", 1);
+      }
+
+      function mousemove(d){
+        tooltip
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
       }
 
     });
@@ -149,6 +169,14 @@ chart.appearancetimes = function(_) {
     appearancetimes = _;
     return chart;
   };
+
+chart.adjust = function(_) {
+    if (!arguments.length) return adjust;
+    adjust = _;
+    return chart;
+  };
+
+  
 
   return chart;
 

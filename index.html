@@ -2,7 +2,8 @@
 <html>
 <head>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+  <style type="text/css">
+  </style>
 </head>
 <body>
   <div id="container" width="100%" height="200px"></div>
@@ -15,7 +16,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.3/d3-tip.min.js"></script>
   <script type="text/javascript" src="d3-waffle.js"></script>
   
-  <script type="text/javascript">
+<script type="text/javascript">
 
   /* example 1 with simple data */
   var data = [
@@ -57,7 +58,7 @@
   /* example 4 */
   /* a more complex one */
   /* data from http://www.nytimes.com/2008/07/20/business/20debt.html?_r=0  */
-  var data = [
+  var data2 = [
     { "name": "Mortgage ($84,911)", "value": 84911},
     { "name": "Auto and\ntuition loans ($14,414)", "value": 14414},
     { "name": "Home equity loans ($10,062)", "value": 10062},
@@ -65,7 +66,7 @@
   ]
 
   /* to color elements we use the class name ( slugigy(name) ) */
-  var domain = data.map(function(d){ return slugify(d.name); })
+  var domain = data2.map(function(d){ return slugify(d.name); })
   var range = ["#c7d4b6", "#a3aabd", "#a0d0de", "#97b5cf"]
   var palette = d3.scale.ordinal().domain(domain).range(range);
 
@@ -77,11 +78,33 @@
                   .height(150);
 
   d3.select("#container4")
-    .datum(data)
+    .datum(data2)
     .call(chart4);
 
+  /* example 5 */
+  /* using fa font */
+  var domain = data.map(function(d){ return slugify(d.name); })
+  var range = ["darkred", "darkblue", "green", "orange"]
+  var palette = d3.scale.ordinal().domain(domain).range(range);
 
-  </script>
+  var chart5 = d3waffle()
+                  .rows(5)
+                  .scale(1/3)
+                  .icon("&#xf1b9;")
+                  .adjust(0.7)
+                  .colorscale(d3.scale.category10())
+                  .appearancetimes(function(d, i){
+                    mod = 13;
+                    val = i % mod;
+                    return val / mod * 1250;
+                  })
+                  .height(300);
+
+  d3.select("#container5")
+    .datum(data)
+    .call(chart5);
+
+</script>
 
 </body>
 </html>

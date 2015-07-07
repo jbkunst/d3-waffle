@@ -38,7 +38,7 @@ You can change:
 - The icon (unicode string by now)
 - The number of rows to show (an integer)
 - The color palette (a d3 quantitative function) 
-- The timmign effect (a function)
+- The timming effect (a function)
 
 ```
 var chart2 = d3waffle()
@@ -76,12 +76,12 @@ var chart4 = d3waffle()
               .rows(7)
               .scale(1/392)
               .colorscale(palette)
-              .appearancetimes(function(){ return 100;})
+              .appearancetimes(function(d, i){ return i*10 + Math.random()*250;})
               .height(150);
 
 d3.select("#container4")
-.datum(data)
-.call(chart4);
+      .datum(data)
+      .call(chart4);
 ```
 ![](images/screenshot_3.png)
 
