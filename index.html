@@ -73,7 +73,7 @@
                   .rows(7)
                   .scale(1/392)
                   .colorscale(palette)
-                  .appearancetimes(function(){ return 100;})
+                  .appearancetimes(function(d, i){ return i*10 + Math.random()*250;})
                   .height(150);
 
   d3.select("#container4")

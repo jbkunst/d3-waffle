@@ -13,6 +13,7 @@ You can see how it looks [here](https://rawgit.com/jbkunst/d3-waffle/master/inde
 2. Cook the `d3waffle()` with your parameters 
 3. And eat it!
 
+### Simple example 
 ```
 var data = [
     { "name": "type 1", "value": 102},
@@ -32,7 +33,13 @@ d3.select("#container")
 
 ## Options
 
-You can change the scale of values, change the icon, the palette and more!
+You can change:
+- Values scale (a positive number)
+- The icon (unicode string by now)
+- The number of rows to show (an integer)
+- The color palette (a d3 quantitative function) 
+- The timmign effect (a function)
+
 ```
 var chart2 = d3waffle()
 			.rows(6)
@@ -46,17 +53,21 @@ d3.select("#container2")
 ```
 ![](images/screenshot_2.png)
 
-Other examples:
+#### Other examples
+
+A relative more complex:
+Source https://github.com/hrbrmstr/waffle from http://www.nytimes.com/2008/07/20/business/20debt.html
 
 ```
 var data = [
-{ "name": "Mortgage ($84,911)", "value": 84911},
-{ "name": "Auto and\ntuition loans ($14,414)", "value": 14414},
-{ "name": "Home equity loans ($10,062)", "value": 10062},
-{ "name": "Credit Cards ($8,565)", "value": 8565}
+  { "name": "Mortgage ($84,911)", "value": 84911},
+  { "name": "Auto and\ntuition loans ($14,414)", "value": 14414},
+  { "name": "Home equity loans ($10,062)", "value": 10062},
+  { "name": "Credit Cards ($8,565)", "value": 8565}
 ]
 
 /* to color elements we use the class name ( slugigy(name) ) */
+/* include in d3-waflle.js */
 var domain = data.map(function(d){ return slugify(d.name); })
 var range = ["#c7d4b6", "#a3aabd", "#a0d0de", "#97b5cf"]
 var palette = d3.scale.ordinal().domain(domain).range(range);
@@ -83,11 +94,12 @@ This plugin needs only [d3js](http://d3js.org/)!
 1. https://gist.github.com/XavierGimenez/8070956
 3. http://d3js.org/
 4. [Day/Hour Heatmap by tjdecke](http://bl.ocks.org/tjdecke/5558084)
+5. https://github.com/hrbrmstr/waffle
 
 ## News
-- Version 0.1 released (2015-06-23). 
+- Version 0.1 released (2015-07-07). 
 
-## Future Work
+## Future Work (WIP)
 
 - Tooltips plz!
 - Better viz using fontawesome (need adjust paramters)

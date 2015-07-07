@@ -155,7 +155,6 @@ chart.appearancetimes = function(_) {
 }
 
 function slugify(text){
-
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
@@ -191,13 +190,4 @@ function cartesianprod(paramArray) {
 
 
   return addTo([], Array.prototype.slice.call(arguments));
-}
-
-/*http://stackoverflow.com/questions/12503146/create-an-array-with-same-element-repeated-multiple-times-in-javascript*/
-function fillArray(value, len) {
-  if (len == 0) return [];
-  var a = [value];
-  while (a.length * 2 <= len) a = a.concat(a);
-  if (a.length < len) a = a.concat(a.slice(0, len - a.length));
-  return a;
 }
