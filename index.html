@@ -62,15 +62,11 @@
     .call(chart3);
 
   /* example 4 */
-  var domain = data.map(function(d){ return slugify(d.name); })
-  var range = ["darkred", "darkblue", "green", "orange"]
-  var palette = d3.scale.ordinal().domain(domain).range(range);
-
   var chart4 = d3waffle()
                   .rows(5)
                   .scale(1/3)
                   .icon("&#xf1b9;")
-                  .adjust(0.7)
+                  .adjust(0.5)
                   .colorscale(d3.scale.category10())
                   .appearancetimes(function(d, i){
                     mod = 13;
