@@ -98,7 +98,8 @@ This plugin needs only [d3js](http://d3js.org/)!
 6. https://rud.is/b/2015/03/26/pre-cran-waffle-update-isotype-pictograms/ (yay I keep drying ;) )
 
 ## News
-- Version 0.1 released (2015-07-07). 
+- Version 0.1.1 released (2015-07-07). Adding better tooltips, general idea from d3vennjs. Nowthere is FontAwesome support, using the unicode (http://fortawesome.github.io/Font-Awesome/cheatsheet/). Adding `adjust` parameter because some icons are bigger so you can (need) adjust the size font (size * factor + "px")
+- Version 0.1 released (2015-07-07). Minimal functionalities. 
 
 ## Future Work (WIP)
 
