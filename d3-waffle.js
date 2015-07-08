@@ -43,14 +43,15 @@ function d3waffle() {
 
       console.log("detail data length: ", detaildata.length)
       
-      var gridSize = Math.floor((height - margin.top - margin.bottom) / rows)
+      var gridSize = ((height - margin.top - margin.bottom) / rows)
 
       /* setting the container */
       var svg = selection.append("svg")
             .attr("width",  "100%")
             .attr("height", height + "px")
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .style("cursor", "default");
 
       var tooltip = d3.select("body").append("div")
         .style("position", "absolute")
@@ -63,8 +64,7 @@ function d3waffle() {
         .style("border-radius","2px")
         .style("opacity",0)
         .style('font-size',  "15px")
-
-      svg.style("cursor", "default");
+        .style("cursor", "default");
 
       var nodes = svg.selectAll(".node")
             .data(detaildata)
@@ -73,17 +73,6 @@ function d3waffle() {
             .attr("transform", function(d) { return "translate(" + (d.col)*gridSize + "," + (rows - d.row - 1)*gridSize  + ")"; });
 
       /* this is necesary, when the icons are small/thin activate mouseout */
-      nodes.append("rect")
-            .style("fill", "white")
-            .attr('class', function(d){ return d.class; })
-            .style("stroke", "gray")
-            .attr("width", gridSize)
-            .attr("height", gridSize)
-            .on("mouseover", mouseover)
-            .on("mouseout", mouseout)
-            .on("mousemove", mousemove)
-            .style("opacity", 0)
-
       nodes.append("text")
             .style("opacity", 0)
             .html(icon)
@@ -105,25 +94,36 @@ function d3waffle() {
             .duration(appearancetimes)
             .style("opacity", 1)
 
+      nodes.append("rect")
+            .style("fill", "white")
+            .attr('class', function(d){ return d.class; })
+            .style("stroke", "gray")
+            .attr("width", gridSize)
+            .attr("height", gridSize)
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout)
+            .on("mousemove", mousemove)
+            .style("opacity", 0)
+
       function mouseover(d){
         tooltip.transition().duration(100).style("opacity", .9);
         el = data.filter(function(e){ return e.name == d.name})[0]
         txt = "<b>" +el.name + "</b><br>" + d3.format(',')(el.value) + "<br>(" + d3.format(".0%")(el.percent) + ")"
         tooltip.html(txt);
 
-      /*  d3.select("#" + idcontainer).selectAll("text").transition().duration(100).style("opacity", 0.2);
+        d3.select("#" + idcontainer).selectAll("text").transition().duration(100).style("opacity", 0.2);
         d3.select("#" + idcontainer).selectAll("text." + d.class).transition().duration(100).style("opacity", 1);
-      */}
+      }
 
       function mouseout(d){
         tooltip.transition().duration(100).style("opacity", 0);
-        /*d3.select("#" + idcontainer).selectAll("text").transition().duration(100).style("opacity", 1);
-      */}
+        d3.select("#" + idcontainer).selectAll("text").transition().duration(100).style("opacity", 1);
+      }
 
       function mousemove(d){
         tooltip
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY - 28) + "px");
+            .style("left", (d3.event.pageX + 0 ) + "px")
+            .style("top", (d3.event.pageY + - 70) + "px");
       }
 
     });
