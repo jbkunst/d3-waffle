@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>D3-waffle by jbkunst</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">D3-waffle</h1>
+      <h2 class="project-tagline">I&#39;m hungry for data!</h2>
+      <a href="https://github.com/jbkunst/d3-waffle" class="btn">View on GitHub</a>
+      <a href="https://github.com/jbkunst/d3-waffle/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/jbkunst/d3-waffle/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="d3-waflle" class="anchor" href="#d3-waflle" aria-hidden="true"><span class="octicon octicon-link"></span></a>d3-waflle</h1>
+
+<p><strong>d3-waffle</strong>  is a waffle (viz) maker <em>a la</em> D3. </p>
+
+<h2>
+<a id="live-demo" class="anchor" href="#live-demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live Demo</h2>
+
+<p>You can see how it looks <a href="https://rawgit.com/jbkunst/d3-waffle/master/index.html">here</a>.</p>
+
+<h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<ol>
+<li>Choose your selector!</li>
+<li>Prepare your data like <code>[{ name: "yay!", value: 80}, ...]</code>
+</li>
+<li>Cook the <code>d3waffle()</code> with your parameters </li>
+<li>And eat it!</li>
+</ol>
+
+<h3>
+<a id="simple-example" class="anchor" href="#simple-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple example</h3>
+
+<pre><code>var data = [
+    { "name": "type 1", "value": 102},
+    { "name": "type 2", "value": 65},
+    { "name": "type 3", "value": 43},
+    { "name": "type 4", "value": 12}
+  ]
+
+var chart = d3waffle();
+
+d3.select("#container")
+            .datum(data)
+            .call(chart);
+</code></pre>
+
+<p><img src="images/screenshot_1.png" alt=""></p>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<p>You can change:</p>
+
+<ul>
+<li>Values scale (a positive number)</li>
+<li>The icon (unicode string by now)</li>
+<li>The number of rows to show (an integer)</li>
+<li>The color palette (a d3 quantitative function) </li>
+<li>The timming effect (a function)</li>
+</ul>
+
+<pre><code>var chart2 = d3waffle()
+            .rows(6)
+            .icon("&amp;#9679;")
+            .scale(0.5); // basically is Math.round(value/5);
+
+d3.select("#container2")
+            .datum(data)
+            .call(chart2);
+
+</code></pre>
+
+<p><img src="images/screenshot_2.png" alt=""></p>
+
+<h4>
+<a id="other-examples" class="anchor" href="#other-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other examples</h4>
+
+<p>A relative more complex:
+Source <a href="https://github.com/hrbrmstr/waffle">https://github.com/hrbrmstr/waffle</a> from <a href="http://www.nytimes.com/2008/07/20/business/20debt.html">http://www.nytimes.com/2008/07/20/business/20debt.html</a></p>
+
+<pre><code>var data = [
+  { "name": "Mortgage ($84,911)", "value": 84911},
+  { "name": "Auto and\ntuition loans ($14,414)", "value": 14414},
+  { "name": "Home equity loans ($10,062)", "value": 10062},
+  { "name": "Credit Cards ($8,565)", "value": 8565}
+]
+
+/* to color elements we use the class name ( slugigy(name) ) */
+/* include in d3-waflle.js */
+var domain = data.map(function(d){ return slugify(d.name); })
+var range = ["#c7d4b6", "#a3aabd", "#a0d0de", "#97b5cf"]
+var palette = d3.scale.ordinal().domain(domain).range(range);
+
+var chart4 = d3waffle()
+              .rows(7)
+              .scale(1/392)
+              .colorscale(palette)
+              .appearancetimes(function(d, i){ return i*10 + Math.random()*250;})
+              .height(150);
+
+d3.select("#container4")
+      .datum(data)
+      .call(chart4);
+</code></pre>
+
+<p><img src="images/screenshot_3.png" alt=""></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>This plugin needs only <a href="http://d3js.org/">d3js</a>!</p>
+
+<h2>
+<a id="references-and-related-workd" class="anchor" href="#references-and-related-workd" aria-hidden="true"><span class="octicon octicon-link"></span></a>References and related workd</h2>
+
+<ol>
+<li><a href="https://gist.github.com/XavierGimenez/8070956">https://gist.github.com/XavierGimenez/8070956</a></li>
+<li><a href="http://d3js.org/">http://d3js.org/</a></li>
+<li><a href="http://bl.ocks.org/tjdecke/5558084">Day/Hour Heatmap by tjdecke</a></li>
+<li><a href="https://github.com/hrbrmstr/waffle">https://github.com/hrbrmstr/waffle</a></li>
+<li>
+<a href="https://rud.is/b/2015/03/26/pre-cran-waffle-update-isotype-pictograms/">https://rud.is/b/2015/03/26/pre-cran-waffle-update-isotype-pictograms/</a> (yay I keep drying ;) )</li>
+</ol>
+
+<h2>
+<a id="news" class="anchor" href="#news" aria-hidden="true"><span class="octicon octicon-link"></span></a>News</h2>
+
+<ul>
+<li>Version 0.1.1 released (2015-07-07). Adding better tooltips, general idea from <a href="http://benfred.github.io/venn.js/examples/intersection_tooltip.html">d3vennjs</a>. Now, there is FontAwesome support, using the unicode (<a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/">http://fortawesome.github.io/Font-Awesome/cheatsheet/</a>). Adding <code>adjust</code> parameter because some icons are bigger so you can (need) adjust the size font (size * factor + "px")</li>
+<li>Version 0.1 released (2015-07-07). Minimal functionalities. </li>
+</ul>
+
+<h2>
+<a id="future-work" class="anchor" href="#future-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>Future Work</h2>
+
+<ul>
+<li>Improve tooltips</li>
+</ul>
+
+<h2>
+<a id="known-bugs" class="anchor" href="#known-bugs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Known bugs</h2>
+
+<ul>
+<li>When you move the curso from left to right the mouse icon change to <em>text selection</em> reducing the UX quality.</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/jbkunst/d3-waffle">D3-waffle</a> is maintained by <a href="https://github.com/jbkunst">jbkunst</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
