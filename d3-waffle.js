@@ -3,7 +3,7 @@ function d3waffle() {
       icon = "&#9632;",
       scale = 1,
       rows = 10,
-      adjust = 1,
+      adjust = 0.8,
       colorscale = d3.scale.category20(),
       appearancetimes = function(d, i){ return 500; },
       height = 200;
