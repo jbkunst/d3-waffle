@@ -104,6 +104,7 @@ This plugin needs only [d3js](http://d3js.org/)!
 ## Future Work
 
 - Improve tooltips
+- Add legend
 
 ## Known bugs
 
