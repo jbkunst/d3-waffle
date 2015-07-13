@@ -92,19 +92,21 @@ This plugin needs only [d3js](http://d3js.org/)!
 ## References and related workd
 
 1. https://gist.github.com/XavierGimenez/8070956
-3. http://d3js.org/
-4. [Day/Hour Heatmap by tjdecke](http://bl.ocks.org/tjdecke/5558084)
-5. https://github.com/hrbrmstr/waffle
-6. https://rud.is/b/2015/03/26/pre-cran-waffle-update-isotype-pictograms/ (yay I keep drying ;) )
+1. http://d3js.org/
+1. [Day/Hour Heatmap by tjdecke](http://bl.ocks.org/tjdecke/5558084)
+1. https://github.com/hrbrmstr/waffle
+1. Legends idea from http://bl.ocks.org/kramer/4745936
+1. https://rud.is/b/2015/03/26/pre-cran-waffle-update-isotype-pictograms/ (yay I keep drying ;) )
 
 ## News
+- Version 0.1.2 released (2015-07-13). Legend funcionality
 - Version 0.1.1 released (2015-07-07). Adding better tooltips, general idea from [d3vennjs](http://benfred.github.io/venn.js/examples/intersection_tooltip.html). Now, there is FontAwesome support, using the unicode (http://fortawesome.github.io/Font-Awesome/cheatsheet/). Adding `adjust` parameter because some icons are bigger so you can (need) adjust the size font (size * factor + "px")
 - Version 0.1 released (2015-07-07). Minimal functionalities. 
 
 ## Future Work
 
 - Improve tooltips
-- Add legend
+- Improve Legends
 
 ## Known bugs
 

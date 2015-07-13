@@ -6,7 +6,8 @@ function d3waffle() {
       adjust = 0.8,
       colorscale = d3.scale.category20(),
       appearancetimes = function(d, i){ return 500; },
-      height = 200;
+      height = 200,
+      magic_padding = 5;
      
   function chart(selection) {
     
@@ -41,7 +42,7 @@ function d3waffle() {
         detaildata[i].row = griddata[i][1];
       })
 
-      console.log("detail data length: ", detaildata.length)
+      /*console.log("detail data length: ", detaildata.length)*/
       
       var gridSize = ((height - margin.top - margin.bottom) / rows)
 
@@ -53,18 +54,19 @@ function d3waffle() {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
             .style("cursor", "default");
 
-      var tooltip = d3.select("body").append("div")
-        .style("position", "absolute")
-        .style("text-align", "right")
-        .style("background", "#333")
-        .style("margin", "3px")
-        .style("color","white")
-        .style("padding","3px")
-        .style("border","0px")
-        .style("border-radius","2px")
-        .style("opacity",0)
-        .style('font-size',  "15px")
-        .style("cursor", "default");
+      var tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "waffle-tooltip")
+            .style("position", "absolute")
+            .style("text-align", "right")
+            .style("background", "#333")
+            .style("margin", "3px")
+            .style("color","white")
+            .style("padding","3px")
+            .style("border","0px")
+            .style("border-radius","2px")
+            .style("opacity",0)
+            .style("cursor", "default");
 
       var nodes = svg.selectAll(".node")
             .data(detaildata)
@@ -92,7 +94,7 @@ function d3waffle() {
             .on("mousemove", mousemove)
             .transition()
             .duration(appearancetimes)
-            .style("opacity", 1)
+            .style("opacity", 1);
 
       nodes.append("rect")
             .style("fill", "white")
@@ -104,6 +106,36 @@ function d3waffle() {
             .on("mouseout", mouseout)
             .on("mousemove", mousemove)
             .style("opacity", 0)
+
+      var legend = svg.selectAll('.legend')
+          .data(data)
+          .enter().append('g')
+          .attr('class', function(d){ return "legend" + " " + d.class; })
+          .attr("transform", function(d) { return "translate(" + (cols*gridSize + magic_padding) + "," + magic_padding + ")"; })
+        
+      legend.append('text')
+            .attr('x', gridSize)
+            .attr('y', function(d, i){ return i * gridSize + i * magic_padding / 2;})
+            .style("opacity", 1)
+            .html(function(d){ return icon; })
+            .attr('class', function(d){ return d.class; })
+            .attr('font-family', 'FontAwesome')
+            .attr("transform", function(d) { return "translate(" + gridSize/2 + "," + 5/6*gridSize  + ")"; })
+            .style('fill', function(d){ return colorscale(d.class); })
+            /*.style("font-size", function(d) {
+              val = 9;
+              val2 = 2.5;
+              textsize = Math.min(val2 * gridSize, (val2 * gridSize - val) / this.getComputedTextLength() * val);
+              return textsize * adjust + "px";
+            });*/
+
+      legend.append('text')
+            .attr('x', 1.5*gridSize + magic_padding)
+            .attr('y', function(d, i){ return i * gridSize + i * magic_padding / 2;})
+            .style("opacity", 1)
+            .html(function(d){ return d.name; })
+            .attr('class', function(d){ return "waffle-legend-text" + " " + d.class; })
+            .attr("transform", function(d) { return "translate(" + gridSize/2 + "," + 5/6*gridSize  + ")"; })
 
       function mouseover(d){
         tooltip.transition().duration(100).style("opacity", .9);
