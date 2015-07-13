@@ -64,7 +64,7 @@ function d3waffle() {
             .style("color","white")
             .style("padding","3px")
             .style("border","0px")
-            .style("border-radius","2px")
+            .style("border-radius","3px") // 3px rule
             .style("opacity",0)
             .style("cursor", "default");
 
